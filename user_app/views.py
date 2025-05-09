@@ -4,26 +4,64 @@ from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
-from .forms import LoginForm, UserCreationForm, UserRegisterForm
+from .forms import UserRegisterForm, UserSignInForm
 
 
-def register(request):
+def user_register_view(request):
     if request.method == 'POST':
-        form = UserRegisterForm(request.POST)
-        if form.is_valid():
-            form.save()
-            username = form.cleaned_data.get['username']
-            if User.objects.filter(username=username).exists:
-                form.add_error('username', f'пользователь для {username} уже существует')
+        reg_form = UserRegisterForm(request.POST)
+        if reg_form.is_valid():
+            username = reg_form.cleaned_data.get['username']
+            first_name = reg_form.cleaned_data.get['first_name']
+            last_name = reg_form.cleaned_data.get['last_name']
+            password = reg_form.cleaned_data.get['password']
+            if User.objects.filter(username=username).exists():
+                reg_form.add_error('username', f'пользователь для {username} уже существует')
             else:
-                messages.success(request, f'Account was created for {username}')
-            return redirect('login')
+                user = User.objects.create_user(
+                    username=username,
+                    first_name = first_name,
+                    last_name = last_name,
+                    password = password,
+                )
+                user.is_active = True
+                user.save()
+                authenticate(username=username, password=password)
+                if user is not None:
+                    login(request, user)
+                    messages.success(request, f'Account was created for {username}')
+                    return redirect('article_app:articles')
     else:
-        form = UserRegisterForm()
-    return render(request, 'users/profile.html')
+        reg_form = UserRegisterForm()
+
+    context = {
+        'reg_form': reg_form
+    }
+    return render(request, 'user_app/register.html', context)
 
 
-@login_required
-def profile(request):
-    return render(request, 'users/profile.html')
+
+def user_sign_in_view(request):
+    if request.method == 'POST':
+        sign_in_form = UserSignInForm(request.POST)
+        if sign_in_form.is_valid():
+            username = sign_in_form.cleaned_data.get['username']
+            password = sign_in_form.cleaned_data.get['password']
+
+            user = User.objects.get(
+                username = username,
+                password = password
+            )
+            user.is_active = True
+            authenticate(username=username, password=password)
+            if user is not None:
+                login(request, user)
+                return redirect('article_app:articles')
+    else:
+        sign_in_form = UserSignInForm()
+
+    context = {
+        'sign_in_form': sign_in_form
+    }
+    return render(request, 'user_app/login.hyml, context')
 
