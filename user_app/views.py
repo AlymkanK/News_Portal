@@ -2,7 +2,7 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from .forms import UserRegisterForm, UserSignInForm
 
@@ -63,5 +63,13 @@ def user_sign_in_view(request):
     context = {
         'sign_in_form': sign_in_form
     }
-    return render(request, 'user_app/login.hyml, context')
+    return render(request, 'user_app/login.html', context)
+
+
+
+@login_required
+def logout_user(request):
+    logout(request)
+    messages.success(request, 'Вы успешно вышли из аккаунта')
+    return redirect('article_app:articles')
 
