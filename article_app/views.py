@@ -9,10 +9,6 @@ class ArticleListView(ListView):
     template_name= 'article_app/articles.html'
     context_object_name = 'articles'
 
-    def get_queryset(self):
-        queryset = super().get_queryset()
-        return queryset
-
 
 
 
@@ -37,6 +33,7 @@ class ArticleCreateView(LoginRequiredMixin, CreateView):
             f'Название: {form.instance.articles.name}\n'
             f'Фото: {form.instance.articles.images}\n'
             f'Категория: {form.instance.articles.category}\n'
+            f'Автор: {form.instance.articles.author}'
 
         )
 
