@@ -1,16 +1,9 @@
+{% extends 'article_app/base.html' %}
 {% load static %}
 
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>register</title>
-</head>
-<body>
-<h2 class = 'Регистрация'></h2>
+{% block content %}
+
+<h2>Регистрация</h2>
 
 <form method="post">
     {% csrf_token %}
@@ -21,6 +14,4 @@
     <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp"
          class="bg-cover text-white d-flex align-items-center justify-content-center" alt="Sample image"
 
-
-</body>
-</html>
+{% endblock content %}

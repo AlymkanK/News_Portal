@@ -22,7 +22,7 @@ class Articles(models.Model):
     name = models.CharField(max_length=50, verbose_name='Название')
     #author = models.CharField(max_length=50, default=None, verbose_name='Автор')
     content = models.TextField(max_length=1000, verbose_name='Описание')
-    images= models.ImageField(upload_to='articles_images/')
+    images= models.ImageField(upload_to='articles_images/', blank=True, null=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, verbose_name='Категория')
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
     updated_at = models.DateTimeField(auto_now=True, verbose_name='Дата обновления')
@@ -39,5 +39,12 @@ class Articles(models.Model):
             Articles.clean_save_slug(len(self.name))
             self.slug = slugify(self.name).join
         super().save(*args, **kwargs)
+
+class Advertisement(models.Model):
+    title = models.CharField(max_length=50, verbose_name='Название рекламы')
+    name = models.CharField(max_length=100, verbose_name = 'Имя рекламы')
+    content = models.TextField(verbose_name = 'Контент рекламы')
+    image = models.ImageField(upload_to='advertisement/images')
+
 
 

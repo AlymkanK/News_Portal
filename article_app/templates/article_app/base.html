@@ -1,401 +1,167 @@
 {% load static %}
+{% load tz %}
+
 
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="description" content="">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-
-    <!-- Title -->
-    <title>Новостной блог - удобно и информативно</title>
+    <meta charset="utf-8">
+    <title>Новостной портал - о главном </title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="Free HTML Templates" name="keywords">
+    <meta content="Free HTML Templates" name="description">
 
     <!-- Favicon -->
-    <link rel="icon" href="{% static 'img/core-img/favicon.ico' %}">
+    <link href="{% static 'img/favicon.ico' %}" rel="icon">
 
-    <!-- Stylesheet -->
-    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
 
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.0/css/all.min.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
 </head>
 
 <body>
-    <!-- Preloader -->
-    <div class="preloader d-flex align-items-center justify-content-center">
-        <div class="lds-ellipsis">
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-        </div>
-    </div>
+    <!-- Topbar Start -->
+    <div class="container-fluid d-none d-lg-block">
+        <div class="row align-items-center bg-dark px-lg-5">
+            <div class="col-lg-9">
+                <nav class="navbar navbar-expand-sm bg-dark p-0">
+                    <ul class="navbar-nav ml-n2">
+                        <li class="nav-item border-right border-secondary">
+                            <a class="nav-link text-body small" href="#"><p> {% now "d.m.Y" %}</p></a>
+                        </li>
+                        <li class="nav-item border-right border-secondary">
+                            <a class="nav-link text-body small" href="#">Опубликуй свою рекламу</a>
+                        </li>
+                        <li class="nav-item border-right border-secondary">
+                            <a class="nav-link text-body small" href="{% url 'article_app:contacts' %}">Наши Контакты</a>
+                        </li>
+                        <li class="nav-item">
+                            {% if not user.is_authenticated %}
+                                <p>Вы не вошли в систему.</p>
+                                <a href="{% url 'user_app:login' %}">Войти</a> | <a href="{% url 'user_app:register' %}">Регистрация</a>
+                             {% else %}
+                                 <p>Привет, {{ user.username }} </p>
+                            <form method="post">
+                                <a href="{% url 'user_app:logout' %}">Выйти</a>
+                            </form>
+                            <a href="{% url 'article_app:create' %}"><button type="submit">Создать статью</button>
 
-    <!-- ##### Header Area Start ##### -->
-    <header class="header-area">
-        <!-- Navbar Area -->
-        <div class="newsbox-main-menu">
-            <div class="classy-nav-container breakpoint-off">
-                <div class="container-fluid">
-                    <!-- Menu -->
-                    <nav class="classy-navbar justify-content-between" id="newsboxNav">
-
-                        <!-- Nav brand -->
-                        <a href="index.html" class="nav-brand"><img src="{% static 'img/core-img/logo.png' %}" alt=""></a>
-
-                        <!-- Navbar Toggler -->
-                        <div class="classy-navbar-toggler">
-                            <span class="navbarToggler"><span></span><span></span><span></span></span>
-                        </div>
-
-                        <!-- Menu -->
-                        <div class="classy-menu">
-
-                            <!-- Close Button -->
-                            <div class="classycloseIcon">
-                                <div class="cross-wrap"><span class="top"></span><span class="bottom"></span></div>
-                            </div>
-
-                            <!-- Nav Start -->
-                            <div class="classynav">
-                                <ul>
-                                    <li><a href="#">Международные</a>
-                                        <div class="megamenu">
-                                            <ul class="single-mega cn-col-4">
-                                                <li class="title">Europe</li>
-                                                <li><a href="#">United Kingdom</a></li>
-                                                <li><a href="#">Germany</a></li>
-                                                <li><a href="#">Latvia</a></li>
-                                                <li><a href="#">Poland</a></li>
-                                                <li><a href="#">Italy</a></li>
-                                                <li><a href="#">France</a></li>
-                                                <li><a href="#">Crotia</a></li>
-                                            </ul>
-                                            <ul class="single-mega cn-col-4">
-                                                <li class="title">Africa</li>
-                                                <li><a href="#">Algeria</a></li>
-                                                <li><a href="#">Angola</a></li>
-                                                <li><a href="#">Benin</a></li>
-                                                <li><a href="#">Botswana</a></li>
-                                                <li><a href="#">Burkina Faso</a></li>
-                                                <li><a href="#">Burundi</a></li>
-                                                <li><a href="#">Cameroon</a></li>
-                                            </ul>
-                                        </div>
-                                    </li>
-                                    <li><a href="#">Местные новости</a></li>
-                                    <li><a href="#">Ссылки</a>
-                                        <ul class="dropdown">
-                                            <li><a href="index.html">Главная</a></li>
-                                            <li><a href="catagory.html">Категории</a></li>
-                                            <li><a href="single-post.html">Пост</a></li>
-                                            <li><a href="contact.html">Контакты</a></li>
-                                        </ul>
-                                    </li>
-                                    <li><a href="#">Категории</a>
-                                        <ul class="dropdown">
-                                            <li><a href="#">Спорт</a></li>
-                                            <li><a href="#">Политика</a></li>
-                                            <li><a href="#">Развлекательные</a></li>
-                                            <li><a href="#">Бизнес</a></li>
-                                            <li><a href="#">IT</a></li>
-                                        </ul>
-                                    </li>
-                                    <li><a href="{% url 'user_app:login' %}">Войти</a></li>
-                                </ul>
-
-                                <!-- Header Add Area -->
-                                <div class="header-add-area">
-                                    <a href="#">
-                                       <img src="{% static 'img/bg-img/add.png' %}" alt="">
-                                    </a>
-                                </div>
-                            </div>
-                            <!-- Nav End -->
-
-                        </div>
-                    </nav>
-                </div>
+                            {% endif %}
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="col-lg-3 text-right d-none d-md-block">
+                <nav class="navbar navbar-expand-sm bg-dark p-0">
+                    <ul class="navbar-nav ml-auto mr-n2">
+                        <li class="nav-item">
+                            <a class="nav-link text-body" href="#"><small class="fab fa-twitter"></small></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-body" href="#"><small class="fab fa-facebook-f"></small></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-body" href="#"><small class="fab fa-linkedin-in"></small></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-body" href="#"><small class="fab fa-instagram"></small></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-body" href="#"><small class="fab fa-google-plus-g"></small></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-body" href="#"><small class="fab fa-youtube"></small></a>
+                        </li>
+                    </ul>
+                </nav>
             </div>
         </div>
-    </header>
-    <!-- ##### Header Area End ##### -->
-
-
-
-    <!-- ##### Breaking News Area Start ##### -->
-    <section class="breaking-news-area">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-12">
-                    <!-- Breaking News Widget -->
-                    <div class="breaking-news-ticker d-flex flex-wrap align-items-center">
-                        <div class="title">
-                            <h6>Новости в IT</h6>
-                        </div>
-                        <div id="breakingNewsTicker" class="ticker">
-                            <ul>
-                                <li><a href="#">Frontend против Backend: что выбрать новичку в 2025 году?</a></li>
-                                <li><a href="#">10 ошибок начинающих программистов и как их избежать</a></li>
-                                <li><a href="#">CI/CD: автоматизируй всё!</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
+        <div class="row align-items-center bg-white py-3 px-lg-5">
+            <div class="col-lg-4">
+                <a href="index.html" class="navbar-brand p-0 d-none d-lg-block">
+                    <h1 class="m-0 display-4 text-uppercase text-primary">TEST<span class="text-secondary font-weight-normal">News</span></h1>
+                </a>
             </div>
-        </div>
-    </section>
-    <!-- ##### Breaking News Area End ##### -->
-
-    <!-- ##### Hero Area Start ##### -->
-    <div class="hero-area">
-        <!-- Hero Post Slides -->
-        <div class="hero-post-slides owl-carousel">
-
-            <!-- Single Slide -->
-            <div class="single-slide">
-                <div class="container-fluid">
-                    <div class="row">
-                        <!-- Single Blog Post Area -->
-                        <div class="col-12 col-md-6">
-                            <div class="single-blog-post style-1" data-animation="fadeInUpBig" data-delay="100ms" data-duration="1000ms">
-                                <!-- Blog Thumbnail -->
-                                <div class="blog-thumbnail bg-overlay">
-                                    <a href="#"><img src="{% static 'img/bg-img/1.jpg' %}" alt=""></a>
-                                </div>
-
-                                <!-- Blog Content -->
-                                <div class="blog-content">
-                                    <span class="post-date">June 20, 2018</span>
-                                    <a href="#" class="post-title">Traffic Problems in Time Square</a>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-12 col-md-6">
-                            <!-- Single Blog Post Area -->
-                            <div class="single-blog-post style-1 mb-30" data-animation="fadeInUpBig" data-delay="300ms" data-duration="1000ms">
-                                <!-- Blog Thumbnail -->
-                                <div class="blog-thumbnail bg-overlay">
-                                    <a href="#"><img src="{% static 'img/bg-img/2.jpg' %}" alt=""></a>
-                                </div>
-
-                                <!-- Blog Content -->
-                                <div class="blog-content">
-                                    <span class="post-date">June 20, 2018</span>
-                                    <a href="#" class="post-title">The best way to spend your holliday</a>
-                                </div>
-                            </div>
-                            <!-- Single Blog Post Area -->
-                            <div class="single-blog-post style-1" data-animation="fadeInUpBig" data-delay="500ms" data-duration="1000ms">
-                                <!-- Blog Thumbnail -->
-                                <div class="blog-thumbnail bg-overlay">
-                                    <a href="#"><img src="{% static 'img/bg-img/3.jpg' %}" alt=""></a>
-                                </div>
-
-                                <!-- Blog Content -->
-                                <div class="blog-content">
-                                    <span class="post-date">June 20, 2018</span>
-                                    <a href="#" class="post-title">Sport results for the weekend games</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Single Slide -->
-            <div class="single-slide">
-                <div class="container-fluid">
-                    <div class="row">
-                        <!-- Single Blog Post Area -->
-                        <div class="col-12 col-md-6">
-                            <div class="single-blog-post style-1" data-animation="fadeInUpBig" data-delay="100ms" data-duration="1000ms">
-                                <!-- Blog Thumbnail -->
-                                <div class="blog-thumbnail bg-overlay">
-                                    <a href="#"><img src="{% static 'img/bg-img/1.jpg' %}" alt=""></a>
-                                </div>
-
-                                <!-- Blog Content -->
-
-                            </div>
-                        </div>
-
-                        <div class="col-12 col-md-6">
-                            <!-- Single Blog Post Area -->
-                            <div class="single-blog-post style-1 mb-30" data-animation="fadeInUpBig" data-delay="300ms" data-duration="1000ms">
-                                <!-- Blog Thumbnail -->
-                                <div class="blog-thumbnail bg-overlay">
-                                    <a href="#"><img src="{% static 'img/bg-img/2.jpg' %}"></a>
-                                </div>
-
-                                <!-- Blog Content -->
-                                <div class="blog-content">
-                                    <span class="post-date">June 20, 2018</span>
-                                    <a href="#" class="post-title">The best way to spend your holliday</a>
-                                </div>
-                            </div>
-                            <!-- Single Blog Post Area -->
-                            <div class="single-blog-post style-1" data-animation="fadeInUpBig" data-delay="500ms" data-duration="1000ms">
-                                <!-- Blog Thumbnail -->
-                                <div class="blog-thumbnail bg-overlay">
-                                    <a href="#"><img src="{% static 'img/bg-img/3.jpg' %}" alt=""></a>
-                                </div>
-
-                                <!-- Blog Content -->
-                                <div class="blog-content">
-                                    <span class="post-date">June 20, 2018</span>
-                                    <a href="#" class="post-title">Sport results for the weekend games</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </div>
-
-<div class="top-news-area section-padding-100">
-        <div class="container">
-            <div class="row">
-
-                <!-- Single News Area -->
-                <div class="col-12 col-sm-6 col-lg-4">
-                    <div class="single-blog-post style-2 mb-5">
-                        <!-- Blog Thumbnail -->
-                        <div class="blog-thumbnail">
-                            <a href="#"><img src="img/bg-img/4.jpg" alt=""></a>
-                        </div>
-
-                        <!-- Blog Content -->
-                        <div class="blog-content">
-                            <span class="post-date">June 20, 2018</span>
-                            <a href="#" class="post-title">Elon Musk: Tesla worker admitted to sabotage</a>
-                            <a href="#" class="post-author">By Michael Smith</a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Single News Area -->
-                <div class="col-12 col-sm-6 col-lg-4">
-                    <div class="single-blog-post style-2 mb-5">
-                        <!-- Blog Thumbnail -->
-                        <div class="blog-thumbnail">
-                            <a href="#"><img src="img/bg-img/5.jpg" alt=""></a>
-                        </div>
-
-                        <!-- Blog Content -->
-                        <div class="blog-content">
-                            <span class="post-date">June 20, 2018</span>
-                            <a href="#" class="post-title">Rachel Sm ith breaks down while discussing border crisis </a>
-                            <a href="#" class="post-author">By Michael Smith</a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Single News Area -->
-                <div class="col-12 col-sm-6 col-lg-4">
-                    <div class="single-blog-post style-2 mb-5">
-                        <!-- Blog Thumbnail -->
-                        <div class="blog-thumbnail">
-                            <a href="#"><img src="img/bg-img/6.jpg" alt=""></a>
-                        </div>
-
-                        <!-- Blog Content -->
-                        <div class="blog-content">
-                            <span class="post-date">June 20, 2018</span>
-                            <a href="#" class="post-title">Dow falls 287 points as trade war fears escalate</a>
-                            <a href="#" class="post-author">By Michael Smith</a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Single News Area -->
-                <div class="col-12 col-sm-6 col-lg-4">
-                    <div class="single-blog-post style-2 mb-5">
-                        <!-- Blog Thumbnail -->
-                        <div class="blog-thumbnail">
-                            <a href="#"><img src="img/bg-img/7.jpg" alt=""></a>
-                        </div>
-
-                        <!-- Blog Content -->
-                        <div class="blog-content">
-                            <span class="post-date">June 20, 2018</span>
-                            <a href="#" class="post-title">Elon Musk: Tesla worker admitted to sabotage</a>
-                            <a href="#" class="post-author">By Michael Smith</a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Single News Area -->
-                <div class="col-12 col-sm-6 col-lg-4">
-                    <div class="single-blog-post style-2 mb-5">
-                        <!-- Blog Thumbnail -->
-                        <div class="blog-thumbnail">
-                            <a href="#"><img src="img/bg-img/8.jpg" alt=""></a>
-                        </div>
-
-                        <!-- Blog Content -->
-                        <div class="blog-content">
-                            <span class="post-date">June 20, 2018</span>
-                            <a href="#" class="post-title">Rachel Sm ith breaks down while discussing border crisis </a>
-                            <a href="#" class="post-author">By Michael Smith</a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Single News Area -->
-                <div class="col-12 col-sm-6 col-lg-4">
-                    <div class="single-blog-post style-2 mb-5">
-                        <!-- Blog Thumbnail -->
-                        <div class="blog-thumbnail">
-                            <a href="#"><img src="img/bg-img/9.jpg" alt=""></a>
-                        </div>
-
-                        <!-- Blog Content -->
-                        <div class="blog-content">
-                            <span class="post-date">June 20, 2018</span>
-                            <a href="#" class="post-title">Dow falls 287 points as trade war fears escalate</a>
-                            <a href="#" class="post-author">By Michael Smith</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-12">
-                    <div class="load-more-button text-center">
-                        <a href="#" class="btn newsbox-btn">Load More</a>
-                    </div>
-                </div>
-
+            <div class="col-lg-8 text-center text-lg-right">
+                <a href="https://htmlcodex.com"><img class="img-fluid" src="img/ads-728x90.png" alt=""></a>
             </div>
         </div>
     </div>
+    <!-- Topbar End -->
 
-    <div class="big-add-area mb-100">
-        <div class="container-fluid">
-            <a href="#"><img src="img/bg-img/add2.png" alt=""></a>
-        </div>
+
+    <!-- Navbar Start -->
+    <div class="container-fluid p-0">
+        <nav class="navbar navbar-expand-lg bg-dark navbar-dark py-2 py-lg-0 px-lg-5">
+            <a href="index.html" class="navbar-brand d-block d-lg-none">
+                <h1 class="m-0 display-4 text-uppercase text-primary">TEST<span class="text-white font-weight-normal">News</span></h1>
+            </a>
+            <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-between px-0 px-lg-3" id="navbarCollapse">
+                <div class="navbar-nav mr-auto py-0">
+                    <a href="index.html" class="nav-item nav-link active">Главная</a>
+                    <a href="single.html" class="nav-item nav-link">Новости</a>
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Категории</a>
+                        <div class="dropdown-menu rounded-0 m-0">
+                            {% for category in categories %}
+                            <a href="#" class="dropdown-item">{{ category.name }}</a>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <a href="{% url 'contact.html'" class="nav-item nav-link">Контакты</a>
+                </div>
+                <div class="input-group ml-auto d-none d-lg-flex" style="width: 100%; max-width: 300px;">
+                    <input type="text" class="form-control border-0" placeholder="Keyword">
+                    <div class="input-group-append">
+                        <button class="input-group-text bg-primary text-dark border-0 px-3"><i
+                                class="fa fa-search"></i></button>
+                    </div>
+                </div>
+            </div>
+        </nav>
     </div>
+    <!-- Navbar End -->
+
+    <!-- Breaking News Start -->
+
+    {% block content %}
+    {% endblock %}
 
 
+    <!-- Footer Start -->
+    <div class="container-fluid py-4 px-sm-3 px-md-5" style="background: #111111;">
+        <p class="m-0 text-center">&copy; <a href="#">Your Site Name</a>. All Rights Reserved.
+
+		<!--/*** This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
+		Design by <a href="https://htmlcodex.com">HTML Codex</a></p>
+    </div>
+    <!-- Footer End -->
 
 
+    <!-- Back to Top -->
+    <a href="#" class="btn btn-primary btn-square back-to-top"><i class="fa fa-arrow-up"></i></a>
 
 
-
-    <!-- ##### All Javascript Script ##### -->
-    <!-- jQuery-2.2.4 js -->
-    <script src="{% static 'js/jquery/jquery-2.2.4.min.js' %}"></script>
-    <!-- Popper js -->
-    <script src="{% static 'js/bootstrap/popper.min.js' %}"></script>
-    <!-- Bootstrap js -->
-    <script src="{% static 'js/bootstrap/bootstrap.min.js' %}"></script>
-    <!-- All Plugins js -->
-    <script src="{% static 'js/plugins/plugins.js' %}"></script>
-    <!-- Active js -->
-    <script src="{% static 'js/active.js' %}"></script>
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+    <script src="{% static 'lib/easing/easing.min.js' %}"></script>
+    <script src="{% static 'lib/owlcarousel/owl.carousel.min.js' %}"></script>
+    <!-- Template Javascript -->
+    <script src="{% static 'js/main.js' %}"></script>
 </body>
 
 </html>
