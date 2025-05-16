@@ -18,12 +18,13 @@ class ArticleCreateView(CreateView):
     context_object_name = 'articles'
     success_url = reverse_lazy('article_app:articles')
 
-
     def form_valid(self, form):
         category_name = form.cleaned_data.pop('category')
         category, created = Category.objects.get_or_create(name=category_name)
         form.instance.category = category
         return super().form_valid(form)
+
+
 # def articles_create_view(request):
 #     if request.method == 'POST':
 #         form = ArticlesForm(request.POST)
@@ -58,11 +59,13 @@ class ArticleDetailView(DetailView):
     template_name = 'article_app/article.html'
     context_object_name = 'article'
 
+
 class ArticleUpdateView(UpdateView):
     model = Articles
     template_name = 'article_app/update.html'
     form_class = ArticlesForm
     success_url = reverse_lazy('article_app:articles')
+
 
 class ArticleDeleteView(DeleteView):
     model = Articles
@@ -70,19 +73,25 @@ class ArticleDeleteView(DeleteView):
     context_object_name = 'article'
     success_url = reverse_lazy('article_app:articles')
 
-    def articles_delete_view(request, pk):
-        article = Articles.objects.get(pk=pk)
-        article.delete()
-        return redirect('articles_app:articles')
+    # def articles_delete_view(request, pk):
+    #     article = Articles.objects.get(pk=pk)
+    #     article.delete()
+    #     return redirect('articles_app:articles')
 
-def contacts(request):
-    return redirect( 'article_app:contacts')
+    def test_func(self):
+        article = self.get_object()
+        return self.request.user == article.author
+
+
+
+
+
 
 class CategoryCreateView(CreateView):
     model = Category
     form_class = CategoriesForm
     template_name = 'article_app/create_category.html'
-    context_object_name = 'categories'
+    context_object_name = 'category'
     success_url = reverse_lazy('articles_app:create')
 
 class CategoryListView(ListView):

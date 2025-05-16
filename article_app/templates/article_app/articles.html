@@ -37,17 +37,14 @@
                     {% else %}
                         <p>Нет фото</p>
                     {% endif %}
-                    <div class="overlay">
-                        <div class="mb-2">
-                            <a class="badge badge-primary text-uppercase font-weight-semi-bold p-2 mr-2"
-                                href="">{{ article.category }}</a>
-                            <a class="text-white" href=""><small>{{ article.created_at }}</small></a>
-                        </div>
-                        <a class="h6 m-0 text-white text-uppercase font-weight-semi-bold" href="{'% url 'article:article' article.pk %}">{{ article.title }}</a>
-                    </div>
-                </div>
-                </div>
-            {% endfor %}
+                    <div class="mb-2">
+                                        <a class="badge badge-primary text-uppercase font-weight-semi-bold p-2 mr-2"
+                                            href="">{{ article.category }}</a>
+                                        <a class="text-body" href=""><small>{{ article.created_at}}</small></a>
+                                    </div>
+                                    <a class="h4 d-block mb-3 text-secondary text-uppercase font-weight-bold" href="{% url 'article_app:article' article.pk %}">{{article.name}}</a>
+            <a href=""></a>
+                    {% endfor %}
         </div>
         </div>
     </div>

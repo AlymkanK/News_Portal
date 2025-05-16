@@ -3,9 +3,16 @@
 {% block content %}
 
   <h2>Редактировать статью</h2>
+
   <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
     {{ form.as_p }}
+    {% if user == article.author %}
+    <a href="{% url 'article_app:update' article.pk %}">Редактировать</a>
+    <a href="{% url 'article_app:delete' article.pk %}">Удалить</a>
+    {% else %}
+    <p>Только  автор может удалить или редактировать статью</p>
+    {% endif %}
     <button type="submit" class="btn btn-primary">Сохранить</button>
   </form>
 
