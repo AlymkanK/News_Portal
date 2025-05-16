@@ -5,8 +5,8 @@
   {% csrf_token %}
 
   {{ form.as_p }}
-
-  <a href="{{ }}"></a><button type = 'submit'>Создать категорию</button>
+<br>
+  <a href="{% url 'article_app:category_create' %}"><button type = 'submit'>Создать категорию</button></a>
   <button type = 'submit'>Сохранить</button>
 
 </form>

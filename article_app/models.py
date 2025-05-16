@@ -5,9 +5,11 @@ from django.utils.text import slugify
 
 
 class Category(models.Model):
-    name = models.CharField(max_length=25, verbose_name='Категория')
-    slug = models.SlugField(max_length=25, verbose_name='URL')
+    name = models.CharField(max_length=40, verbose_name='Категория')
+    slug = models.SlugField(max_length=50, verbose_name='URL')
 
+    def __str__(self):
+        return self.name
 
     class Meta:
         verbose_name = 'category'
@@ -17,7 +19,7 @@ class Category(models.Model):
         # # )
 
 class Articles(models.Model):
-    slug = models.SlugField(max_length=15, unique = True, verbose_name='URL')
+    slug = models.SlugField(max_length=200, unique = True, verbose_name='URL')
     title  = models.CharField(max_length=100, verbose_name='Заголовок')
     name = models.CharField(max_length=50, verbose_name='Название')
     #author = models.CharField(max_length=50, default=None, verbose_name='Автор')

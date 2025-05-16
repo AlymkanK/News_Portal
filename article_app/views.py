@@ -75,3 +75,8 @@ class ArticleDeleteView(DeleteView):
 
 def contacts(request):
     return redirect( 'article_app:contacts')
+
+class CategoryCreateView(CreateView):
+    model = Category
+    template_name = 'article_app/create_category.html'
+    success_url = reverse_lazy('articles_app:create')

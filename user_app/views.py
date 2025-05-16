@@ -11,10 +11,10 @@ def user_register_view(request):
     if request.method == 'POST':
         reg_form = UserRegisterForm(request.POST)
         if reg_form.is_valid():
-            username = reg_form.cleaned_data.get['username']
-            first_name = reg_form.cleaned_data.get['first_name']
-            last_name = reg_form.cleaned_data.get['last_name']
-            password = reg_form.cleaned_data.get['password']
+            username = reg_form.cleaned_data.get('username')
+            first_name = reg_form.cleaned_data.get('first_name')
+            last_name = reg_form.cleaned_data.get('last_name')
+            password = reg_form.cleaned_data.get('password')
             if User.objects.filter(username=username).exists():
                 reg_form.add_error('username', f'пользователь для {username} уже существует')
             else:
@@ -26,9 +26,9 @@ def user_register_view(request):
                 )
                 user.is_active = True
                 user.save()
-                authenticate(username=username, password=password)
-                if user is not None:
-                    login(request, user)
+                auth_user = authenticate(username=username, password=password)
+                if auth_user is not None:
+                    login(request, auth_user)
                     messages.success(request, f'Account was created for {username}')
                     return redirect('article_app:articles')
     else:
