@@ -47,13 +47,7 @@ def user_sign_in_view(request):
         if sign_in_form.is_valid():
             username = sign_in_form.cleaned_data.get['username']
             password = sign_in_form.cleaned_data.get['password']
-
-            user = User.objects.get(
-                username = username,
-                password = password
-            )
-            user.is_active = True
-            authenticate(username=username, password=password)
+            user  = authenticate(username=username, password=password)
             if user is not None:
                 login(request, user)
                 return redirect('article_app:articles')
