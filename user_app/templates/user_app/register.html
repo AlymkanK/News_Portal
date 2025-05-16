@@ -8,7 +8,8 @@
 <form method="post">
     {% csrf_token %}
     {{ reg_form.as_p }}
-<button><a href="{% url 'user_app:login' %}">Зарегистрироваться</a></button>
+     <button>Зарегистрироваться</button>
+    <h4><a href="{% url 'user_app:login' %}">Войти</a></h4>
 </form>
 
     <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp"

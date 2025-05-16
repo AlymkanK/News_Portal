@@ -2,16 +2,29 @@
 {% load static %}
 
 {% block content %}
+<div class="position-relative mb-3">
+                        <img src = '{{ article.image.url }}' alt = '{{ article.title }}'>
 
-<h4>{{ article.title }}</h4>
-<h4>{{ article.name }}</h4>
-<h4>{{ article.content }}</h4>
+                        <div class="bg-white border border-top-0 p-4">
+                            <div class="mb-3">
+                                <a class="badge badge-primary text-uppercase font-weight-semi-bold p-2 mr-2" href="">{{ article.category }}</a>
+                                <a class="text-body" href="">{{ article.created_at}}</a>
+                            </div>
+                            <h1 class="mb-3 text-secondary text-uppercase font-weight-bold">{{ article.title }}</h1>
+                            <p>{{article.content}}.</p>
+                            <p>
+                                {% if user.is_authenticated %}
+                            <button type = 'submit'><a href="{% url 'article_app:update' article.pk %}">Редактировать</a></button>
+                                <button type = 'submit'><a href="{% url 'article_app:delete' article.pk %}">Удалить</a></button>
+                                {% endif %}
+   </p>
 
-<a href="{% url 'article_app:update' new.id %}">Нажмите, чтобы обновить </a>
-<br>
-<br>
-<br>
+                        </div>
 
-<a href="{% url 'article_app:delete' new.id %}">Нажмите, чтобы Удалить </a>
 
-{% end block content %}
+
+{% endblock %}
+
+
+
+

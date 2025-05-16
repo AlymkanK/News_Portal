@@ -1,12 +1,14 @@
 {% extends 'article_app/base.html' %}
 
 {% block content %}
+<br>
 <form method="post">
   {% csrf_token %}
 
   {{ form.as_p }}
 <br>
-  <a href="{% url 'article_app:category_create' %}"><button type = 'submit'>Создать категорию</button></a>
+
+<a href="{% url 'article_app:category_create' %}">Создать категорию</a><br>
   <button type = 'submit'>Сохранить</button>
 
 </form>

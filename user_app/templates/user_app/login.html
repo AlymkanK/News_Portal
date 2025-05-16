@@ -9,14 +9,14 @@
                 {% csrf_token %}
                 <br>
                 <div data-mdb-input-init class="form-outline mb-4">
-                    {{ sign_in_form.username.label_tag }}
-                    {{ sign_in_form.username }}
+                    {{ user_sign_form.username.label_tag }}
+                    {{ user_sign_form.username }}
           </div>
 
           <!-- Password input -->
           <div data-mdb-input-init class="form-outline mb-3">
-              {{ sign_in_form.password.label_tag }}
-              {{ sign_in_form.password }}
+              {{ user_sign_form.password.label_tag }}
+              {{ user_sign_form.password }}
           </div><br>
 
           <div class="d-flex justify-content-between align-items-center">

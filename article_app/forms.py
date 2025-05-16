@@ -6,7 +6,7 @@ class ArticlesForm(forms.ModelForm):
     class Meta:
         model = Articles
         fields = [ 'title', 'name', 'content',
-        'images', 'category',
+        'images', 'category', 'author'
         ]
 
 class CategoriesForm(forms.ModelForm):
@@ -19,4 +19,3 @@ class AdvertisementForm(forms.ModelForm):
     class Meta:
         model = Advertisement
         fields = ['title', 'name', 'content', 'image']
-

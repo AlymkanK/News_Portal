@@ -1,3 +1,11 @@
 {% extends 'article_app/base.html' %}
 
-{form.as_p }
+{% block content %}
+<br xmlns="http://www.w3.org/1999/html">
+<form method="post">
+    <h3>Создай новую категорию</h3>
+    {% csrf_token %}
+    {{form.as_p }}
+    <button type="submit"><a href="{% url 'article_app:create' %}">Создать</a></button>
+</form>
+{% endblock %}

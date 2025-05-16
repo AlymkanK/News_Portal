@@ -11,9 +11,9 @@
                         <div class="owl-carousel tranding-carousel position-relative d-inline-flex align-items-center ml-3"
                             style="width: calc(100% - 170px); padding-right: 90px;">
                             {% for article in articles %}
-                            <div class="text-truncate"><a class="text-white text-uppercase font-weight-semi-bold" href="">{{ article.title }}</a><br></div>
+                            <div class="text-truncate"><a class="text-white text-uppercase font-weight-semi-bold" href="{% url 'article_app:article' article.pk %}">{{ article.title }}&nbsp;&nbsp;&nbsp;</a><br></div>
                             {% endfor %}
-                        }
+
                         </div>
                     </div>
                 </div>
@@ -43,7 +43,7 @@
                                 href="">{{ article.category }}</a>
                             <a class="text-white" href=""><small>{{ article.created_at }}</small></a>
                         </div>
-                        <a class="h6 m-0 text-white text-uppercase font-weight-semi-bold" href="">{{ article.content }}</a>
+                        <a class="h6 m-0 text-white text-uppercase font-weight-semi-bold" href="{'% url 'article:article' article.pk %}">{{ article.title }}</a>
                     </div>
                 </div>
                 </div>
@@ -77,6 +77,7 @@
                                         <a class="text-body" href=""><small>{{ article.created_at}}</small></a>
                                     </div>
                                     <p class="h4 d-block mb-3 text-secondary text-uppercase font-weight-bold">{{article.content}}</p>
+                                    <a href="{% url 'article_app:article' article.pk %}"><i>Читать далее</i></a>
                                 </div>
                                 {% endfor block %}%
                             </div>

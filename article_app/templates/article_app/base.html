@@ -44,19 +44,19 @@
                         </li>
                         <li class="nav-item border-right border-secondary">
                             <a class="nav-link text-body small" href="{% url 'article_app:contacts' %}">Наши Контакты</a>
-                        </li>
+                        </li>&nbsp;&nbsp;
                         {% if not user.is_authenticated %}
                                 <p>Вы не вошли в систему.</p>
-                                <a href="{% url 'user_app:login' %}">Войти</a> | <a href="{% url 'user_app:register' %}">Регистрация</a>
+                                <a href="{% url 'user_app:login' %}">Войти</a> |&nbsp;&nbsp; <a href="{% url 'user_app:register' %}">Регистрация</a>
                              {% else %}
-                                 <p>Привет, {{ user.username|capfirst }} </p>
+                                 <p>Привет, {{ user.username|capfirst }} </p>&nbsp;&nbsp;
                             <form method="post">
-                                <a href="{% url 'user_app:logout' %}">Выйти</a>
+                                <a href="{% url 'user_app:logout' %}">Выйти</a>&nbsp;&nbsp;
                             </form>
-                            <li href="{% url 'article_app:create' %}"><button type="submit">Создать статью</button>
+                            <a href="{% url 'article_app:create' %}"><button type="submit">Создать статью</button>
 
                             {% endif %}
-                            </li>
+                            </a>
                     </ul>
                 </nav>
             </div>
@@ -110,13 +110,17 @@
             </button>
             <div class="collapse navbar-collapse justify-content-between px-0 px-lg-3" id="navbarCollapse">
                 <div class="navbar-nav mr-auto py-0">
-                    <a href="index.html" class="nav-item nav-link active">Главная</a>
-                    <a href="single.html" class="nav-item nav-link">Новости</a>
+                    <a href="{% url 'article_app:articles' %}" class="nav-item nav-link active">Главная</a>
+                    <a href="{% url 'article_app:articles' %}" class="nav-item nav-link">Новости</a>
                     <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Категории</a>
+                        <a href="{% url 'article_app:categories' %}" class="nav-link dropdown-toggle" data-toggle="dropdown">Категории</a>
                         <div class="dropdown-menu rounded-0 m-0">
                             {% for category in categories %}
-                            <a href="#" class="dropdown-item">{{ category.name }}</a>
+                            <li><a class="dropdown-item" href="{% url 'article_app:category_detail' category.id %}">
+        {{ category.name }}
+      </a></li>
+    {% empty %}
+      <li><span class="dropdown-item">Нет категорий</span></li>
                             {% endfor %}
                         </div>
                     </div>

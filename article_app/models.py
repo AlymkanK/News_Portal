@@ -22,7 +22,7 @@ class Articles(models.Model):
     slug = models.SlugField(max_length=200, unique = True, verbose_name='URL')
     title  = models.CharField(max_length=100, verbose_name='Заголовок')
     name = models.CharField(max_length=50, verbose_name='Название')
-    #author = models.CharField(max_length=50, default=None, verbose_name='Автор')
+    author = models.CharField(max_length=50, default=None, verbose_name='Автор')
     content = models.TextField(max_length=1000, verbose_name='Описание')
     images= models.ImageField(upload_to='articles_images/', blank=True, null=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, verbose_name='Категория')

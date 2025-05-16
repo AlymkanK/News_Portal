@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
 from .models import Articles, Category
-from .forms import ArticlesForm
+from .forms import ArticlesForm, CategoriesForm
 
 
 class ArticleListView(ListView):
@@ -18,10 +18,12 @@ class ArticleCreateView(CreateView):
     context_object_name = 'articles'
     success_url = reverse_lazy('article_app:articles')
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['category'] = Category.objects.all()
-        return context
+
+    def form_valid(self, form):
+        category_name = form.cleaned_data.pop('category')
+        category, created = Category.objects.get_or_create(name=category_name)
+        form.instance.category = category
+        return super().form_valid(form)
 # def articles_create_view(request):
 #     if request.method == 'POST':
 #         form = ArticlesForm(request.POST)
@@ -60,13 +62,13 @@ class ArticleUpdateView(UpdateView):
     model = Articles
     template_name = 'article_app/update.html'
     form_class = ArticlesForm
-    success_url = reverse_lazy('articles_app:articles')
+    success_url = reverse_lazy('article_app:articles')
 
 class ArticleDeleteView(DeleteView):
     model = Articles
     template_name = 'article_app/delete.html'
     context_object_name = 'article'
-    success_url = reverse_lazy('articles_app:articles')
+    success_url = reverse_lazy('article_app:articles')
 
     def articles_delete_view(request, pk):
         article = Articles.objects.get(pk=pk)
@@ -78,5 +80,22 @@ def contacts(request):
 
 class CategoryCreateView(CreateView):
     model = Category
+    form_class = CategoriesForm
     template_name = 'article_app/create_category.html'
+    context_object_name = 'categories'
     success_url = reverse_lazy('articles_app:create')
+
+class CategoryListView(ListView):
+    model = Category
+    template_name = 'article_app:categories.html'
+    context_object_name = 'categories'
+
+class CategoryDetailView(DetailView):
+    model = Category
+    template_name = ('article_app/create_category.html')
+    context_object_name = 'category'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['articles'] = Articles.objects.filter(category=self.object)
+        return context
