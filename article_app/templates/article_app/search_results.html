@@ -1,0 +1,23 @@
+{% extends 'article_app/base.html' %}
+
+
+{% block content %}
+
+<h2>Результаты поиска</h2>
+
+<form method="get">
+    {{ filter.form.as_p }}
+    <button type="submit">Найти</button>
+</form>
+
+{% if articles %}
+    <ul>
+        {% for article in articles %}
+            <li><a href="{% url 'article_app:detail' article.pk %}">{{ article.title }}</a></li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>Ничего не найдено.</p>
+{% endif %}
+
+{% endblock content %}

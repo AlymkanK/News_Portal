@@ -127,7 +127,10 @@
                     <a href="{% url 'contact.html'" class="nav-item nav-link">Контакты</a>
                 </div>
                 <div class="input-group ml-auto d-none d-lg-flex" style="width: 100%; max-width: 300px;">
-                    <input type="text" class="form-control border-0" placeholder="Keyword">
+                    <form method="get" action="{% url 'article_app:search' %}">
+    <input type="text" name="q" placeholder="Поиск">
+    <button type="submit">Поиск</button>
+</form>
                     <div class="input-group-append">
                         <button class="input-group-text bg-primary text-dark border-0 px-3"><i
                                 class="fa fa-search"></i></button>

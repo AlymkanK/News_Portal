@@ -2,9 +2,11 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
+from django_filters.views import FilterView
+
 from .models import Articles, Category
 from .forms import ArticlesForm, CategoriesForm
-
+from django.db.models import Q
 
 class ArticleListView(ListView):
     model = Articles
@@ -108,3 +110,17 @@ class CategoryDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         context['articles'] = Articles.objects.filter(category=self.object)
         return context
+
+
+class ArticleSearchView(FilterView):
+    model = Articles
+    template_name = 'article_app/search_results.html'
+    context_object_name = 'article'
+
+
+
+
+
+# def article_list(request):
+#     filt = ArticleFilter(requestt.GETT, queryset = Articles.objects.all())
+#     return redirect('article_app/base.html', {'filter': filt})
